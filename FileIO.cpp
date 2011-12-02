@@ -98,23 +98,22 @@ vehicle* getCoordinates(fstream& file, int numOfCars, int numOfTrucks)
 
 	for(int vehicleNumIndex = 0; vehicleNumIndex < totalNumOfVehicles; ++vehicleNumIndex)
 	{	
-		Vehicles->vehicleNum = vehicleNumIndex + 1;		
+		Vehicles[vehicleNumIndex].vehicleNum = vehicleNumIndex + 1;		
 	
 		for(int column = 0; column < COLUMN; ++column)
 		{
 			for(int row = 0; row < ROW; ++row)
 			{
 				
-				if(currentLine <= numOfCarLines)
+				if((currentLine > numOfCarLines) && (currentLine <= numOfTruckLines))
 				{
-					if(currentLine % 5 == 0){file >> garbage;}
-					else{file >> Vehicles->coordinates[column][row];}
-					++currentLine;
+					if(currentLine % 7 == 0){file >> garbage; ++currentLine;}
+					else{file >> Vehicles[vehicleNumIndex].coordinates[column][row]; ++currentLine;}
 				}
-				else if((currentLine > numOfCarLines) && (currentLine <= numOfTruckLines))
+				else if(currentLine <= numOfCarLines)
 				{
-					if(currentLine % 7 == 0){file >> garbage;}
-					else{file >> Vehicles->coordinates[column][row];}
+					if(currentLine % 5 == 0){file >> garbage; ++currentLine;}
+					else{file >> Vehicles[vehicleNumIndex].coordinates[column][row]; ++currentLine;}
 				}
 			}
 		}
